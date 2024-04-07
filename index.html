@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Car Race</title>
+        <script>
+
+            class Car {
+                constructor(brand, model, year, color, price, gas) {
+                    this.brand = brand;
+                    this.model = model;
+                    this.year = year;
+                    this.color = color;
+                    this.price = price;
+                    this.gas = gas;
+                }
+
+                honk() {
+                    let carInfo = document.getElementById("carInfo");
+
+                    let carDetail = document.createElement("p");
+                    carDetail.innerHTML = `<strong>Brand:</strong> ${this.brand}, <strong>Model:</strong>: ${this.model}, <strong>Year:</strong> ${this.year}, <strong>Color:</strong> ${this.color}, <strong>Price:</strong> ${this.price}, <strong>Gas:</strong> ${this.gas} || Tuut tuut    `;
+            
+                    carInfo.appendChild(carDetail);
+                }
+
+                gasLoss() {
+                    let gasLoss = 5;
+                    if (this.year !== 2024) {
+                        gasLoss += 2024 - this.year;
+                    }
+                    this.gas -= gasLoss;
+                }
+            }
+
+            const cars = [
+                new Car("Honda", "CR-V", 2023, "Red", 50000, 45),
+                new Car("Ford", "F-150", 2020, "Black", 25000, 30),
+                new Car("BMW", "X5", 2022, "Green", 60000, 65),
+                new Car("Mazda", "CX-5", 2019, "White", 15000, 60),
+                new Car("Audi", "Q7", 2018, "Silver", 52000, 47),
+                new Car("Kia", "Forte", 2020, "Blue", 21000, 56)
+            ];
+
+            window.onload = function() {
+                cars.forEach(car => {
+                    car.honk();
+                });
+            };
+
+
+            function race() {
+                let raceResults = document.getElementById("raceResults");
+                raceResults.innerHTML = '';
+
+                for (let turn = 1; turn <= 7; turn++) {
+                    let turnHead = document.createElement("h3");
+                    turnHead.textContent = `Turn ${turn}`;
+                    raceResults.appendChild(turnHead);
+
+                    cars.forEach(car => {
+                        car.gasLoss();
+                        let carInfo = document.createElement("p");
+                        carInfo.innerHTML = `<strong>${car.brand} ${car.model}:</strong> ${car.gas} liters remaining`;
+                        raceResults.appendChild(carInfo);
+                    });
+                }
+            }
+        </script>
+    </head>
+    <body bgcolor="lightblue">
+        <h1 style="text-align: center;"><u>Car Race</u></h1>
+
+        <h2 style="text-align: center; color: red;">Before Race</h2>
+        <div id="carInfo" style="text-align: center;"></div>
+
+        <h2 style="text-align: center; color: rgb(29, 91, 8);">Race Results</h2>
+        <div id="raceResults" style="text-align: center;"></div>
+
+        <button onclick="race()" style="display: block; width: 100px; margin: 0 auto;">Start Race</button>
+
+    </body>
+</html>
